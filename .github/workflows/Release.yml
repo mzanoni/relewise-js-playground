@@ -8,9 +8,15 @@ jobs:
     name: Build Vue
     steps:
     - uses: actions/checkout@v2
-    - id: Build-Vue
-      uses: xRealNeon/VuePagesAction@1.0.1
+    - run: npm ci
+    - run: npm run build
+    - name: Setup Pages
+      uses: actions/configure-pages@v5
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
       with:
-        username: 'mzanoni'
-        reponame: 'relewise-js-playground'
-        token: ${{ secrets.GITHUB_TOKEN }}
+        # Upload entire repository
+        path: '.'
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
